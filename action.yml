@@ -1,0 +1,45 @@
+name: 'Vertex AI PR Summarizer'
+description: 'Generate PR summary and test requirements using Google Vertex AI'
+author: 'Your Name'
+
+inputs:
+  github-token:
+    description: 'The GITHUB_TOKEN secret.'
+    required: true
+  gcp-project-id:
+    description: 'Your Google Cloud Project ID.'
+    required: true
+  gcp-location:
+    description: 'The Google Cloud region for your project.'
+    required: false
+    default: 'us-east5'
+  gcp-credentials:
+    description: 'The JSON content of your GCP service account key.'
+    required: true
+  model:
+    description: 'The Vertex AI model to use (e.g., `gemini-2.5-flash`, `claude-sonnet-4-5@20250929`).'
+    required: false
+    default: 'gemini-2.5-flash'
+  system-prompt-path:
+    description: 'The path to a custom system prompt file. If not provided, a default prompt will be used.'
+    required: false
+  comment-location:
+    description: 'Where to post the summary: "comment" (post as PR comment) or "summary" (update PR description).'
+    required: false
+    default: 'comment'
+  diff-size-limit:
+    description: 'The maximum diff size (in bytes) to process. Larger diffs will be skipped.'
+    required: false
+    default: '100000'
+  timeout:
+    description: 'The timeout (in milliseconds) for the Vertex AI API call.'
+    required: false
+    default: '120000'
+
+runs:
+  using: 'node20'
+  main: 'dist/index.js'
+
+branding:
+  icon: 'file-text'
+  color: 'blue'
